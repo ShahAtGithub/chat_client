@@ -1,9 +1,11 @@
 import Chat from '@/compononet/chat';
+import GroupList from '@/compononet/groupmodal';
 import List from '@/compononet/list';
 import UserList from '@/compononet/userlist';
 import Protected from '@/hooks/protected';
 import API from '@/utils/apiConfig';
 import Head from 'next/head'
+
 
 
 // pages/index.js
@@ -14,19 +16,14 @@ const Home = () => {
   const [currentChatList, setcurrentChatList] = useState([])
   const [selectedUser, setSelectedUser] = useState("ram");
   const [isUserListClick, setisUserListClick] = useState(false)
-  const [messages, setMessages] = useState([]);
-
-  const [selectedChatId, setselectedChatId] = useState(null)
-
-  const [allMessages, setAllMessages] = useState([])
+  const [isGroupListClick, setisgroupListClick] = useState(false)
+  const [messageData, setmessageData] = useState([])
 
 
-  const getAllmessages=async()=>{
-    
-  }
+  
   const handleUserSelect = (user) => {
     setSelectedUser(user);
-    setMessages([]); // Clear messages when a new user is selected
+    setmessageData([]); // Clear messages when a new user is selected
   };
   const fecthcurrentchat=async()=>{
     try {
@@ -44,9 +41,10 @@ const Home = () => {
           }          
           return{
             id:item._id,
-            latestmessages:item?.latestMessage?.content,
-            senderName: senderName(),
-            isNewMessage: item?.latestMessage?.sender?._id == JSON.parse(user)?._id ?false :true
+            latestmessages:item?.latestMessage?.content ? item?.latestMessage?.content: "click to start new conversations !",
+            senderName:item?.isGroupChat ? item?.chatName: senderName()?.name,
+            isNewMessage: item?.latestMessage?.sender?._id == JSON.parse(user)?._id ?false :true,
+            isGroupChat:item.isGroupChat
           }
         })
         setcurrentChatList([...getAllchat])
@@ -73,15 +71,32 @@ const Home = () => {
   }, [])
   const createNewChat=async(id)=>{
    try {
+   
     const token=await localStorage.getItem("Token")
     const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-    await API("chat",config,{
+    await API.post("chat",{
       userId:id
-    }).then((res)=>alert(JSON.stringify(res))).catch((err)=>console.log(err))
+    },config).then((res)=>
+
+    {
+      const senderName=()=>{
+        return res.data?.users[0]?._id==id ? res.data.users[0] :res.data.users[1]
+      }          
+      const newMessageInstance={
+        id:res.data._id,
+        latestmessages: "click to start new conversations !",
+        senderName: senderName()?.name,
+        isNewMessage: false,
+        isGroupChat:res.data.isGroupChat
+      }
+      setcurrentChatList([newMessageInstance,...currentChatList])
+
+
+    }).catch((err)=>console.log(err))
     
    } catch (error) {
     
@@ -89,6 +104,30 @@ const Home = () => {
 
   }
   console.log(currentChatList)
+
+  const handleGroupCreate=async(data)=>{
+    setisgroupListClick(false)
+    const token=await localStorage.getItem("Token")
+    const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+    await API.post("/chat/group",data,config).then((res)=>{
+      const newMessageInstance={
+        id:res.data._id,
+        latestmessages: "click to start new conversations !",
+        senderName: res.data.chatName,
+        isNewMessage: false,
+        isGroupChat:res.data.isGroupChat
+      }
+      setcurrentChatList([newMessageInstance,...currentChatList])
+    
+    }).catch((err)=>{})
+
+
+
+  }
   
 
   return (
@@ -102,13 +141,14 @@ const Home = () => {
       
       <Protected>
       <List isOpen={isUserListClick} setIsOpen={setisUserListClick} onPress={createNewChat} />
+      <GroupList isOpen={isGroupListClick} setIsOpen={setisgroupListClick} onPress={handleGroupCreate} />
        <button onClick={()=>setisUserListClick(true)} style={{cursor:'pointer'}}> New Chat </button>
     <div style={{
       display:'flex',
       flexDirection:'row'
     }}>
-      <UserList users={currentChatList} onUserSelect={handleUserSelect} />
-      <Chat selectedUser={selectedUser} messages={messages} onSendMessage={handleSendMessage} />
+      <UserList users={currentChatList} selectedUser={selectedUser} setisgroupListClick={setisgroupListClick} onUserSelect={handleUserSelect} />
+      <Chat selectedUser={selectedUser} messageData={messageData} setmessageData={setmessageData}  />
     </div>
     </Protected>
     </>

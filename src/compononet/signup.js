@@ -18,7 +18,7 @@ const SignUp = () => {
         email,password,name
     }).then((res)=>{
        Router.push("/login")
-    }).catch((err)=>alert(err))
+    }).catch((err)=>{})
         
     } catch (error) {
         

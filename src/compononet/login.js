@@ -17,7 +17,7 @@ const Login = () => {
     API.post("/user/login",{
         email,password
     }).then((res)=>{
-        alert(JSON.stringify(res.data))
+      
         localStorage.setItem("User",JSON.stringify(res.data))
         localStorage.setItem("Token",res.data.token)
         Router.push("/")

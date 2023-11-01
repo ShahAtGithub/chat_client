@@ -1,37 +1,77 @@
 // components/UserList.js
-import Image from 'next/image';
-import React from 'react';
+import Image from "next/image";
+import React from "react";
 
-
-
-const UserList = ({ users, onUserSelect }) => {
-
+function Itemcompononet(props) {
   return (
-    <div className="user-list" >
-      <div style={{display:'flex', flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-      <h2>User List</h2>
-      <button  style={{cursor:'pointer',height:"25px"}}>Create a group</button>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        gap: 2,
+        border: "2px solid black",
+        padding: "4px",
+        background:props.selectedUser?.id==props.user.id &&  "black",
+        borderRadius:"10px",
+        margin:"5px"
+      }}
+      onClick={() => props.onUserSelect(props.user)}
+    >
+      <div
+        style={{
+          flex: 0.2,
+          height: "40px",
+          width: "40px",
+          justifyContent: "center",
+          borderRadius: "100%",
+          border: `1px solid black `,
+          background: "#FFFF",
+        }}
+      ></div>
+      <div
+        style={{
+          flex: 0.8,
+          display: "flex",
+          flexDirection: "column",
+          cursor:'pointer'
+        }}
+      >
+        <p className="headertitle" style={{color:props.selectedUser?.id==props.user.id && "white"}}>{props.user.senderName}</p>
+
+        <p className="headertitletag" style={{color: props.selectedUser?.id==props.user.id && "white"}}>
+          {props.user.isNewMessage ? "" : "You:"} {props.user.latestmessages}{" "}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+const UserList = ({ users, onUserSelect,selectedUser,setisgroupListClick }) => {
+  console.log("selectedUser",selectedUser) 
+   return (
+    <div className="user-list">
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <h2>User List</h2>
+        <button onClick={()=>setisgroupListClick(true)} style={{ cursor: "pointer", height: "25px" }}>
+          Create a group
+        </button>
       </div>
       <div>
-        {users.map((user) => (
-          <div key={user.id} style={{
-            display:'flex',
-            flexDirection:'row',
-            gap:2,
-            borderBottom:"1px solid black",
-            padding:"4px"
-
-          }} onClick={() => onUserSelect(user)}>
-            <div style={{flex:0.2,height:"40px",width:"40px",justifyContent:'center', borderRadius:"100%", border:"1px solid black ",background:"#FFFF"}}>
-              
-            </div>
-            <div style={{flex:0.8,display:"flex",flexDirection:"column"}}>
-            <p className='headertitle'>{user.senderName.name}</p>
-            
-            <p className='headertitletag'>{user.isNewMessage?"":"You:"} {user.latestmessages} </p>
-            </div>
-          </div>
-        ))}
+        {users.map((user) =>
+            <Itemcompononet
+              key={user.id}
+              user={user}
+              onUserSelect={onUserSelect}
+              selectedUser={selectedUser}
+            />
+        )}
       </div>
     </div>
   );
