@@ -4,9 +4,13 @@ const nextConfig = {
   reactStrictMode: true,
 };
 
+
 module.exports = {
   env: {
     BACKEND_URL: process.env.BACKEND_URL,
+  },
+  images: {
+    domains: ['*'],
   },
   nextConfig,
 };

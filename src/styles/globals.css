@@ -2,20 +2,21 @@
 body {
   font-family: 'Open Sans', sans-serif;
 }
+p{
+  margin:0
+}
 
 .headertitle{
-    color: #001044;
+  color: #001044;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
-  line-height: normal;
   }
   .headertitletag{
   color: #676E83;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
   }
  
   table {
@@ -23,4 +24,131 @@ body {
     width: 100%;
   }
 
-  
+  /* Add this CSS in a .css or .scss file and import it into your component */
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.login-box {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 300px;
+}
+
+.login-box h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-group {
+  margin: 15px 0;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.login-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+
+/* components/UserList.module.css */
+.user-list {
+  width: 20%;
+  border-right: 1px solid #ccc;
+  padding: 20px;
+}
+.user-list h2 {
+  margin-bottom: 20px;
+}
+.user-list ul {
+  list-style: none;
+  padding: 0;
+}
+.user-list li {
+  cursor: pointer;
+  margin-bottom: 10px;
+  color: #007bff;
+}
+.user-list li:hover {
+  text-decoration: underline;
+}
+
+
+/* components/Chat.module.css */
+.chat {
+  width: 80%;
+  padding: 20px;
+}
+.chat h2 {
+  margin-bottom: 20px;
+}
+.messages {
+  height: 400px;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+.message {
+  margin: 10px 0;
+}
+.sent {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px;
+}
+.received {
+  background-color: #e1e1e1;
+  border-radius: 5px;
+  padding: 5px;
+}
+.sender {
+  font-weight: bold;
+}
+.chat-input {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.chat-input button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+.chat-input button:hover {
+  background-color: #0056b3;
+}
