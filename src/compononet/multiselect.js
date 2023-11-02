@@ -64,7 +64,7 @@ const MultiSelect = ({data, selectedOptions, setSelectedOptions}) => {
       />
      
       
-        {selectedOptions.map((option) => <Itemcompononet data={option} />) }
+        {selectedOptions.map((option) => <Itemcompononet key={option.value} data={option} />) }
     </div>
   );
 };

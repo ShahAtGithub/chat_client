@@ -92,7 +92,7 @@ export default function List({isOpen,setIsOpen,onPress}) {
             }}
           ></div>
           {
-            data.map((item,index)=><Itemcompononet data={item} selectedUser={selectedUser} onPress={()=>{
+            data.map((item,index)=><Itemcompononet key={item._id} data={item} selectedUser={selectedUser} onPress={()=>{
               setselectedUser(item._id)
               setIsOpen(false)
               onPress(item._id)
