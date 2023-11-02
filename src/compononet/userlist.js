@@ -8,7 +8,7 @@ function Itemcompononet(props) {
       style={{
         display: "flex",
         flexDirection: "row",
-        gap: 2,
+        gap: 4,
         border: "2px solid black",
         padding: "4px",
         background:props.selectedUser?.id==props.user.id &&  "black",
@@ -18,7 +18,9 @@ function Itemcompononet(props) {
       onClick={() => props.onUserSelect(props.user)}
     >
       <div
-        style={{
+        
+      >
+        <img style={{
           flex: 0.2,
           height: "40px",
           width: "40px",
@@ -26,8 +28,8 @@ function Itemcompononet(props) {
           borderRadius: "100%",
           border: `1px solid black `,
           background: "#FFFF",
-        }}
-      ></div>
+        }} src= {props.user?.isGroupChat ?"https://img.freepik.com/premium-vector/people-group-avatar-character-vector-illustration-design_24877-19936.jpg" :"https://thumbs.dreamstime.com/b/flat-male-avatar-image-beard-hairstyle-businessman-profile-icon-vector-179285629.jpg"} />
+      </div>
       <div
         style={{
           flex: 0.8,

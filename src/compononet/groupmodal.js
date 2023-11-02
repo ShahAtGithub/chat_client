@@ -41,9 +41,11 @@ export default function GroupList({isOpen,setIsOpen,onPress}) {
         <div
           style={{
             position: "relative",
+            paddingLeft:"5px",
+            paddingRight:"5px"
           }}
         >
-          <div style={{}}>
+          <div style={{height:"30px",padding:"10px"}}>
             <p className="titleheader" style={{color:"#001044",fontWeight:600}}>Create a New Group</p>
           </div>
           <div
@@ -57,19 +59,26 @@ export default function GroupList({isOpen,setIsOpen,onPress}) {
           ></div>
           
           <div>
-            <p className="titletag">Group name</p>
+            <p className="headertitletag">Group name</p>
             <input type="text" placeholder="enter a group name " value={groupName} onChange={(e)=>setgroupName(e.target.value)} />
 
           </div>
           <div>
-            <p>select user</p>
+            <p className="headertitletag">Select user</p>
             <MultiSelect data={data} selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions} />
             
           </div>
           <div>
-            <button onClick={()=>onPress({
+            <button
+              style={{
+                width:"90%",
+                margin:"10px",
+                height:"40px"
+
+              }}
+             onClick={()=>onPress({
                 name:groupName,
-                users:JSON.stringify(selectedOptions)
+                users:selectedOptions
             })}>Create</button>
           </div>
          

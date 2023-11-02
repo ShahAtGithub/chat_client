@@ -1,40 +1,70 @@
-import React, { useState } from 'react';
 
+import React, { useState } from 'react';
+import Select from 'react-select';
+function Itemcompononet({selectedUser,data,onPress}) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        gap: 4,
+        border: "2px solid black",
+        padding: "4px",
+        background: "black",
+        borderRadius:"10px",
+        margin:"5px",
+        justifyContent:'space-around'
+      }}
+    >
+      <div
+        
+      >
+        <img style={{
+          flex: 0.2,
+          height: "40px",
+          width: "40px",
+          justifyContent: "center",
+          borderRadius: "100%",
+          border: `1px solid black `,
+          background: "#FFFF",
+        }} src= {"https://thumbs.dreamstime.com/b/flat-male-avatar-image-beard-hairstyle-businessman-profile-icon-vector-179285629.jpg"} />
+      </div>
+      <div
+        style={{
+          flex: 0.8,
+          display: "flex",
+          flexDirection: "column",
+          cursor:'pointer',
+          justifyContent:"center"
+        }}
+      >
+        <p className="headertitle" style={{color: "white"}}>{data.label}</p>
+
+        
+      </div>
+    </div>
+  );
+}
 const MultiSelect = ({data, selectedOptions, setSelectedOptions}) => {
-  
 
  
 
-  const handleOptionToggle = (value) => {
-    if (selectedOptions.includes(value)) {
-      setSelectedOptions(selectedOptions.filter((option) => option !== value));
-    } else {
-      setSelectedOptions([...selectedOptions, value]);
-    }
+  const handleChange = (selected) => {
+    setSelectedOptions(selected);
   };
 
   return (
-    <div className="multiselect">
-      <div className="selected-options">
-        {selectedOptions.map((option) => (
-          <span key={option} className="selected-option">
-            {data.find((o) => o.value === option).label}
-          </span>
-        ))}
-      </div>
-      <div className="options">
-        {data.map((option) => (
-          <label key={option.value}>
-            <input
-              type="checkbox"
-              value={option.value}
-              checked={selectedOptions.includes(option.value)}
-              onChange={() => handleOptionToggle(option.value)}
-            />
-            {option.label}
-          </label>
-        ))}
-      </div>
+    <div>
+      
+      <Select
+        isMulti
+        options={data}
+        value={selectedOptions}
+        onChange={handleChange}
+      />
+     
+      
+        {selectedOptions.map((option) => <Itemcompononet data={option} />) }
     </div>
   );
 };

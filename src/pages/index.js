@@ -113,7 +113,14 @@ const Home = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-    await API.post("/chat/group",data,config).then((res)=>{
+      const {name,users}=data
+      const usersIdarray=[]
+      users.map((item)=>usersIdarray.push(item.value))
+      
+    await API.post("/chat/group",{
+      name:name,
+      users:JSON.stringify(usersIdarray)
+    },config).then((res)=>{
       const newMessageInstance={
         id:res.data._id,
         latestmessages: "click to start new conversations !",
